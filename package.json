@@ -7,7 +7,8 @@
     "node": ">= 4.2"
   },
   "scripts": {
-    "test": "env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test --watch"
+    "test": "env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test --watch",
+    "test-ci": "env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test"
   },
   "repository": {
     "type": "git",

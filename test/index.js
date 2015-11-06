@@ -1,5 +1,5 @@
 const assert = require('power-assert')
-const PublicWebpackPlugin = require('..')
+const StaticFilesWebpackPlugin = require('..')
 const rmrf = require('rimraf')
 const path = require('path')
 const fs = require('fs')
@@ -10,13 +10,13 @@ describe('integration tests', () => {
     rmrf(path.join(__dirname, 'dist'), done)
   })
 
-  it('stores paths to resolved public files', (done) => {
+  it('stores paths to resolved static files', (done) => {
     var compiler = webpack({
       context: __dirname,
       entry: './fixtures/index.js',
       plugins: [
-        new PublicWebpackPlugin({
-          path: path.join(__dirname, 'dist', 'public.json')
+        new StaticFilesWebpackPlugin({
+          path: path.join(__dirname, 'dist', 'static.json')
         })
       ]
       output: {
@@ -27,17 +27,17 @@ describe('integration tests', () => {
     })
     compiler.run((err, stats) => {
       assert(!err)
-      fs.readFile(path.join(__dirname, 'dist', 'public.json'), (err, content) => {
+      fs.readFile(path.join(__dirname, 'dist', 'static.json'), (err, content) => {
         assert(!err)
-        const publicFiles = JSON.parse(content.toString())
-        const fileNames = Object.keys(publicFiles)
+        const staticFiles = JSON.parse(content.toString())
+        const fileNames = Object.keys(staticFiles)
         assert.deepEqual(fileNames.sort(), [
-          path.join(__dirname, 'fixtures', 'public', 'a.gif'),
-          path.join(__dirname, 'fixtures', 'public', 'b.gif'),
-          path.join(__dirname, 'fixtures', 'public', 'c.gif')
+          path.join(__dirname, 'fixtures', 'static', 'a.gif'),
+          path.join(__dirname, 'fixtures', 'static', 'b.gif'),
+          path.join(__dirname, 'fixtures', 'static', 'c.gif')
         ])
         fileNames.forEach((fileName) => {
-          assert(publicFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
+          assert(staticFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
         })
         done()
       })

@@ -1,1 +1,1 @@
-require.context('!!public!./public', true, /.+/)
+require.context('!!static-file!./static', true, /.+/)

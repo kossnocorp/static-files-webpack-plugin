@@ -1,25 +1,25 @@
-# PublicWebpackPlugin
-[![Build Status](https://travis-ci.org/kossnocorp/public-webpack-plugin.svg?branch=master)](https://travis-ci.org/kossnocorp/public-webpack-plugin)
+# StaticFilesWebpackPlugin
+[![Build Status](https://travis-ci.org/kossnocorp/static-files-webpack-plugin.svg?branch=master)](https://travis-ci.org/kossnocorp/static-files-webpack-plugin)
 
-A companion plugin for [public-loader](https://github.com/kossnocorp/public-loader),
-it emits a JSON file with paths to included public files.
+A companion plugin for [static-file-loader](https://github.com/kossnocorp/static-file-loader),
+it emits a JSON file with processed static file paths.
 
 It's like [assets-webpack-plugin](https://github.com/sporto/assets-webpack-plugin)
 but for static assets.
 
 ## Installation
 
-Install [public-loader](https://github.com/kossnocorp/public-loader) and
+Install [static-file-loader](https://github.com/kossnocorp/static-file-loader) and
 [file-loader](https://github.com/webpack/file-loader):
 
 ```sh
-npm install public-loader file-loader --save-dev
+npm install static-file-loader file-loader --save-dev
 ```
 
 Install the plugin:
 
 ```sh
-npm install public-webpack-plugin --save-dev
+npm install static-files-webpack-plugin --save-dev
 ```
 
 ## Example
@@ -28,7 +28,7 @@ In a webpack config:
 
 ```js
 var path = require('path')
-var PublicWebpackPlugin = require('public-webpack-plugin')
+var StaticFilesWebpackPlugin = require('static-files-webpack-plugin')
 
 // ...
 
@@ -44,8 +44,8 @@ module.exports = {
     // ...
   },
 
-  plugins: [new PublicWebpackPlugin({
-    path: path.join(distPath, 'public.json')
+  plugins: [new StaticFilesWebpackPlugin({
+    path: path.join(distPath, 'static.json')
   })]
 }
 ```
@@ -53,7 +53,7 @@ module.exports = {
 In an entry:
 
 ```js
-require.context('!!public!./assets', true, /.+/)
+require.context('!!static-file!./static', true, /.+/)
 
 // ...
 ```
@@ -64,7 +64,7 @@ Run webpack to build entries:
 webpack
 ```
 
-`cat dist/public.json`:
+`cat dist/static.json`:
 
 ```json
 {

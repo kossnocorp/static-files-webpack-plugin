@@ -1,6 +1,6 @@
 {
-  "name": "public-webpack-plugin",
-  "version": "0.1.0",
+  "name": "static-files-webpack-plugin",
+  "version": "0.2.0",
   "description": "webpack plugin that emits a JSON file with public paths",
   "main": "index.js",
   "engines": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:kossnocorp/public-webpack-plugin.git"
+    "url": "git@github.com:kossnocorp/static-files-webpack-plugin.git"
   },
   "keywords": [
     "webpack"
@@ -20,15 +20,15 @@
   "author": "Sasha Koss <koss@nocorp.me>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kossnocorp/public-webpack-plugin/issues"
+    "url": "https://github.com/kossnocorp/static-files-webpack-plugin/issues"
   },
-  "homepage": "https://github.com/kossnocorp/public-webpack-plugin",
+  "homepage": "https://github.com/kossnocorp/static-files-webpack-plugin",
   "devDependencies": {
     "espower-loader": "^1.0.0",
     "file-loader": "^0.8.4",
     "mocha": "^2.3.3",
     "power-assert": "^1.1.0",
-    "public-loader": "^0.2.0",
+    "static-file-loader": "^0.3.0",
     "rimraf": "^2.4.3",
     "webpack": "^1.12.2"
   }

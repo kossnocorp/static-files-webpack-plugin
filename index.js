@@ -1,12 +1,13 @@
 'use strict'
 
 var fs = require('fs')
+var path = require('path')
 var staticMapKey = require('static-file-loader').key
 
 class StaticFilesWebpackPlugin {
   constructor(options) {
     this.options = Object.assign({
-      path: process.cwd()
+      path: path.join(process.cwd(), 'static.json')
     }, options)
   }
 

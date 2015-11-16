@@ -72,6 +72,63 @@ webpack
 }
 ```
 
+## Options
+
+### `path`
+
+Specifies an output path for the JSON file. By default `path` equals to
+`path.join(process.cwd(), 'static.json')`.
+
+It could be an absolute path:
+
+```js
+new StaticFilesWebpackPlugin({
+  path: path.join(distPath, 'static.json')
+})
+```
+
+… or a path relative to `process.cwd()`:
+
+```js
+new StaticFilesWebpackPlugin({
+  path: 'static.json'
+})
+```
+
+### `useRelativePaths`
+
+Allows to omit `process.cwd()` in the JSON keys. By default it equals
+to false and produces such output:
+
+```json
+{
+  "/Users/koss/src/date-fns/date-fns.org/ui/static/img/favicon.png": "/e09ef13032827f865ef8004c185277f7.png"
+}
+```
+
+If `useRelativePaths` is true, then it will looks like this:
+
+```json
+{
+  "ui/static/img/favicon.png": "/e09ef13032827f865ef8004c185277f7.png"
+}
+```
+
+The option also could be a string (an absolute path or a path relative
+to `process.cwd()`):
+
+```js
+new StaticFilesWebpackPlugin({
+  useRelativePaths: 'ui/static'
+})
+```
+
+```json
+{
+  "img/favicon.png": "/e09ef13032827f865ef8004c185277f7.png"
+}
+```
+
 ## License
 
 MIT

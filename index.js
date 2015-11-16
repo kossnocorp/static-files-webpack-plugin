@@ -6,14 +6,40 @@ var staticMapKey = require('static-file-loader').key
 
 class StaticFilesWebpackPlugin {
   constructor(options) {
-    this.options = Object.assign({
-      path: path.join(process.cwd(), 'static.json')
-    }, options)
+    options = options || {}
+
+    var outputPath = options.outputPath || 'static.json'
+    if (!path.isAbsolute(outputPath)) {
+      outputPath = path.join(process.cwd(), outputPath)
+    }
+
+    this.options = {
+      outputPath,
+      useRelativePaths: options.useRelativePaths
+    }
   }
 
   apply(compiler) {
     compiler.plugin('after-emit', (compilation, callback) => {
-      fs.writeFile(this.options.path, JSON.stringify(compilation[staticMapKey]), (err) => {
+      var map = compilation[staticMapKey]
+      if (this.options.useRelativePaths) {
+        var relativePathBase
+        if (typeof this.options.useRelativePaths == 'string') {
+          relativePathBase = this.options.useRelativePaths
+          if (!path.isAbsolute(relativePathBase)) {
+            relativePathBase = path.join(process.cwd(), relativePathBase)
+          }
+        } else {
+          relativePathBase = process.cwd()
+        }
+
+        map = Object.keys(map).reduce((mapAcc, filePath) => {
+          mapAcc[filePath.replace(`${relativePathBase}/`, '')] = map[filePath]
+          return mapAcc
+        }, {})
+      }
+
+      fs.writeFile(this.options.outputPath, JSON.stringify(map), (err) => {
         if (err) throw err
         callback()
       })

@@ -34,7 +34,7 @@ class StaticFilesWebpackPlugin {
         }
 
         map = Object.keys(map).reduce((mapAcc, filePath) => {
-          mapAcc[filePath.replace(`${relativePathBase}/`, '')] = map[filePath]
+          mapAcc[filePath.replace(`${relativePathBase}${path.sep}`, '')] = map[filePath]
           return mapAcc
         }, {})
       }

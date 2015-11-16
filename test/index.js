@@ -5,7 +5,16 @@ const path = require('path')
 const fs = require('fs')
 const webpack = require('webpack')
 
-describe('integration tests', () => {
+const isWin = /^win/.test(process.platform)
+
+var publicFilePathRegexp
+if (isWin) {
+  publicFilePathRegexp = /^\\bundles\\\w+\.gif$/
+} else {
+  publicFilePathRegexp = /^\/bundles\/\w+\.gif$/
+}
+
+describe('StaticFilesWebpackPlugin', () => {
   afterEach((done) => {
     rmrf(path.join(__dirname, 'dist'), () => {
       rmrf(path.join(__dirname, 'static.json'), () => {
@@ -41,7 +50,7 @@ describe('integration tests', () => {
           path.join(__dirname, 'fixtures', 'static', 'c.gif')
         ])
         fileNames.forEach((fileName) => {
-          assert(staticFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
+          assert(staticFiles[fileName].match(publicFilePathRegexp))
         })
         done()
       })
@@ -78,7 +87,7 @@ describe('integration tests', () => {
                 path.join(__dirname, 'fixtures', 'static', 'c.gif')
               ])
               fileNames.forEach((fileName) => {
-                assert(staticFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
+                assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
             })
@@ -114,7 +123,7 @@ describe('integration tests', () => {
                 path.join(__dirname, 'fixtures', 'static', 'c.gif')
               ])
               fileNames.forEach((fileName) => {
-                assert(staticFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
+                assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
             })
@@ -152,7 +161,7 @@ describe('integration tests', () => {
                 path.join('test', 'fixtures', 'static', 'c.gif')
               ])
               fileNames.forEach((fileName) => {
-                assert(staticFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
+                assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
             })
@@ -188,7 +197,7 @@ describe('integration tests', () => {
                 path.join('static', 'c.gif')
               ])
               fileNames.forEach((fileName) => {
-                assert(staticFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
+                assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
             })
@@ -224,7 +233,7 @@ describe('integration tests', () => {
                 path.join('static', 'c.gif')
               ])
               fileNames.forEach((fileName) => {
-                assert(staticFiles[fileName].match(/^\/bundles\/\w+\.gif$/))
+                assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
             })

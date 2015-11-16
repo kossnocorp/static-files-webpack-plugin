@@ -1,5 +1,5 @@
 # StaticFilesWebpackPlugin
-[![Build Status](https://travis-ci.org/kossnocorp/static-files-webpack-plugin.svg?branch=master)](https://travis-ci.org/kossnocorp/static-files-webpack-plugin)
+[![Build Status](https://travis-ci.org/kossnocorp/static-files-webpack-plugin.svg?branch=master)](https://travis-ci.org/kossnocorp/static-files-webpack-plugin) [![Build Status](https://ci.appveyor.com/api/projects/status/53la2hie8trjsmfx?svg=true)](https://ci.appveyor.com/project/kossnocorp/static-files-webpack-plugin)
 
 A companion plugin for [static-file-loader](https://github.com/kossnocorp/static-file-loader),
 it emits a JSON file with processed static file paths.

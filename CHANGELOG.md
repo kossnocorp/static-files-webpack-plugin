@@ -5,6 +5,7 @@
 * Improvements:
   - `path` renamed to `outputPath`
   - `outputPath` now accepts relative path
+  - Make it works in Windows
 * Additions:
   - `useRelativePaths` option added
 

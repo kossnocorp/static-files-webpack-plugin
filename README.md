@@ -45,7 +45,7 @@ module.exports = {
   },
 
   plugins: [new StaticFilesWebpackPlugin({
-    path: path.join(distPath, 'static.json')
+    outputPath: path.join(distPath, 'static.json')
   })]
 }
 ```

@@ -4,7 +4,7 @@
   "description": "webpack plugin that emits a JSON file with public paths",
   "main": "index.js",
   "engines": {
-    "node": ">= 4.2"
+    "node": ">= 0.12"
   },
   "scripts": {
     "test": "env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test --watch",
@@ -28,7 +28,7 @@
     "file-loader": "^0.8.4",
     "mocha": "^2.3.3",
     "power-assert": "^1.1.0",
-    "static-file-loader": "^0.3.0",
+    "static-file-loader": "^0.4.0",
     "rimraf": "^2.4.3",
     "webpack": "^1.12.2"
   }

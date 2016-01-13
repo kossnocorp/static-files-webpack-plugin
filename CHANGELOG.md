@@ -1,3 +1,8 @@
+## v0.4.0 (14 Jan 2015)
+
+* Improvements:
+  - Node.js v0.12 support, kudos to [@sunesimonsen](https://github.com/sunesimonsen)
+
 ## v0.3.0 (16 Nov 2015)
 
 * Bug fixes:

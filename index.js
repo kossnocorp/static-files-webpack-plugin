@@ -38,6 +38,12 @@ StaticFilesWebpackPlugin.prototype.apply = function(compiler) {
       }, {})
     }
 
+    // Ensure that the keys in the map are sorted
+    map = Object.keys(map).sort().reduce(function(mapAcc, filePath) {
+      mapAcc[filePath] = map[filePath]
+      return mapAcc
+    }, {})
+
     fs.writeFile(this.options.outputPath, JSON.stringify(map), function(err) {
       if (err) throw err
       callback()

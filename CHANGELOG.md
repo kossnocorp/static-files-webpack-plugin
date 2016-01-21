@@ -1,4 +1,10 @@
-## v0.4.0 (14 Jan 2015)
+## v0.5.0 (21 Jan 2016)
+
+* Improvements:
+  - The keys order in the map is now persistent,
+    kudos to [@sunesimonsen](https://github.com/sunesimonsen).
+
+## v0.4.0 (14 Jan 2016)
 
 * Improvements:
   - Node.js v0.12 support, kudos to [@sunesimonsen](https://github.com/sunesimonsen)

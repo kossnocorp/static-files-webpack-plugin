@@ -14,18 +14,18 @@ if (isWin) {
   publicFilePathRegexp = /^\/bundles\/\w+\.gif$/
 }
 
-describe('StaticFilesWebpackPlugin', function() {
-  afterEach(function(done) {
-    rmrf(path.join(__dirname, 'dist'), function() {
-      rmrf(path.join(__dirname, 'static.json'), function() {
-        rmrf(path.join(process.cwd(), 'static.json'), function() {
+describe('StaticFilesWebpackPlugin', function () {
+  afterEach(function (done) {
+    rmrf(path.join(__dirname, 'dist'), function () {
+      rmrf(path.join(__dirname, 'static.json'), function () {
+        rmrf(path.join(process.cwd(), 'static.json'), function () {
           rmrf(path.join(process.cwd(), 'wut.json'), done)
         })
       })
     })
   })
 
-  it('does not fail when static loader is not used', function(done) {
+  it('does not fail when static loader is not used', function (done) {
     var compiler = webpack({
       context: __dirname,
       entry: './fixtures/without_static.js',
@@ -38,16 +38,16 @@ describe('StaticFilesWebpackPlugin', function() {
         publicPath: '/bundles'
       }
     })
-    compiler.run(function(err, stats) {
+    compiler.run(function (err, stats) {
       assert(!err)
-      fs.readFile(path.join(process.cwd(), 'static.json'), function(err, content) {
+      fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
         assert(!err)
         done()
       })
     })
   })
 
-  it('stores paths to resolved static files', function(done) {
+  it('stores paths to resolved static files', function (done) {
     var compiler = webpack({
       context: __dirname,
       entry: './fixtures/index.js',
@@ -60,9 +60,9 @@ describe('StaticFilesWebpackPlugin', function() {
         publicPath: '/bundles'
       }
     })
-    compiler.run(function(err, stats) {
+    compiler.run(function (err, stats) {
       assert(!err)
-      fs.readFile(path.join(process.cwd(), 'static.json'), function(err, content) {
+      fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
         assert(!err)
         var staticFiles = JSON.parse(content.toString())
         var fileNames = Object.keys(staticFiles)
@@ -71,7 +71,7 @@ describe('StaticFilesWebpackPlugin', function() {
           path.join(__dirname, 'fixtures', 'static', 'b.gif'),
           path.join(__dirname, 'fixtures', 'static', 'c.gif')
         ])
-        fileNames.forEach(function(fileName) {
+        fileNames.forEach(function (fileName) {
           assert(staticFiles[fileName].match(publicFilePathRegexp))
         })
         done()
@@ -79,10 +79,10 @@ describe('StaticFilesWebpackPlugin', function() {
     })
   })
 
-  describe('options', function() {
-    describe('outputPath', function() {
-      context('when the option is an absolute path', function() {
-        it('stores paths to resolved static files', function(done) {
+  describe('options', function () {
+    describe('outputPath', function () {
+      context('when the option is an absolute path', function () {
+        it('stores paths to resolved static files', function (done) {
           var compiler = webpack({
             context: __dirname,
             entry: './fixtures/index.js',
@@ -97,9 +97,9 @@ describe('StaticFilesWebpackPlugin', function() {
               publicPath: '/bundles'
             }
           })
-          compiler.run(function(err, stats) {
+          compiler.run(function (err, stats) {
             assert(!err)
-            fs.readFile(path.join(__dirname, 'dist', 'static.json'), function(err, content) {
+            fs.readFile(path.join(__dirname, 'dist', 'static.json'), function (err, content) {
               assert(!err)
               var staticFiles = JSON.parse(content.toString())
               var fileNames = Object.keys(staticFiles)
@@ -108,7 +108,7 @@ describe('StaticFilesWebpackPlugin', function() {
                 path.join(__dirname, 'fixtures', 'static', 'b.gif'),
                 path.join(__dirname, 'fixtures', 'static', 'c.gif')
               ])
-              fileNames.forEach(function(fileName) {
+              fileNames.forEach(function (fileName) {
                 assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
@@ -117,8 +117,8 @@ describe('StaticFilesWebpackPlugin', function() {
         })
       })
 
-      context('when the option is a relative path', function() {
-        it('stores paths to resolved static files using process.cwd as a base', function(done) {
+      context('when the option is a relative path', function () {
+        it('stores paths to resolved static files using process.cwd as a base', function (done) {
           var compiler = webpack({
             context: __dirname,
             entry: './fixtures/index.js',
@@ -133,9 +133,9 @@ describe('StaticFilesWebpackPlugin', function() {
               publicPath: '/bundles'
             }
           })
-          compiler.run(function(err, stats) {
+          compiler.run(function (err, stats) {
             assert(!err)
-            fs.readFile(path.join(process.cwd(), 'wut.json'), function(err, content) {
+            fs.readFile(path.join(process.cwd(), 'wut.json'), function (err, content) {
               assert(!err)
               var staticFiles = JSON.parse(content.toString())
               var fileNames = Object.keys(staticFiles)
@@ -144,7 +144,7 @@ describe('StaticFilesWebpackPlugin', function() {
                 path.join(__dirname, 'fixtures', 'static', 'b.gif'),
                 path.join(__dirname, 'fixtures', 'static', 'c.gif')
               ])
-              fileNames.forEach(function(fileName) {
+              fileNames.forEach(function (fileName) {
                 assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
@@ -154,9 +154,9 @@ describe('StaticFilesWebpackPlugin', function() {
       })
     })
 
-    describe('useRelativePaths', function() {
-      context('when useRelativePaths is true', function() {
-        it('stores relative paths to resolved static files', function(done) {
+    describe('useRelativePaths', function () {
+      context('when useRelativePaths is true', function () {
+        it('stores relative paths to resolved static files', function (done) {
           var compiler = webpack({
             context: __dirname,
             entry: './fixtures/index.js',
@@ -171,9 +171,9 @@ describe('StaticFilesWebpackPlugin', function() {
               publicPath: '/bundles'
             }
           })
-          compiler.run(function(err, stats) {
+          compiler.run(function (err, stats) {
             assert(!err)
-            fs.readFile(path.join(process.cwd(), 'static.json'), function(err, content) {
+            fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
               assert(!err)
               var staticFiles = JSON.parse(content.toString())
               var fileNames = Object.keys(staticFiles)
@@ -182,7 +182,7 @@ describe('StaticFilesWebpackPlugin', function() {
                 path.join('test', 'fixtures', 'static', 'b.gif'),
                 path.join('test', 'fixtures', 'static', 'c.gif')
               ])
-              fileNames.forEach(function(fileName) {
+              fileNames.forEach(function (fileName) {
                 assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
@@ -191,8 +191,8 @@ describe('StaticFilesWebpackPlugin', function() {
         })
       })
 
-      context('when useRelativePaths is an absolute path', function() {
-        it('stores relative paths to resolved static files', function(done) {
+      context('when useRelativePaths is an absolute path', function () {
+        it('stores relative paths to resolved static files', function (done) {
           var compiler = webpack({
             context: __dirname,
             entry: './fixtures/index.js',
@@ -207,9 +207,9 @@ describe('StaticFilesWebpackPlugin', function() {
               publicPath: '/bundles'
             }
           })
-          compiler.run(function(err, stats) {
+          compiler.run(function (err, stats) {
             assert(!err)
-            fs.readFile(path.join(process.cwd(), 'static.json'), function(err, content) {
+            fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
               assert(!err)
               var staticFiles = JSON.parse(content.toString())
               var fileNames = Object.keys(staticFiles)
@@ -218,7 +218,7 @@ describe('StaticFilesWebpackPlugin', function() {
                 path.join('static', 'b.gif'),
                 path.join('static', 'c.gif')
               ])
-              fileNames.forEach(function(fileName) {
+              fileNames.forEach(function (fileName) {
                 assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()
@@ -227,8 +227,8 @@ describe('StaticFilesWebpackPlugin', function() {
         })
       })
 
-      context('when useRelativePaths is a relative path', function() {
-        it('stores relative paths to resolved static files', function(done) {
+      context('when useRelativePaths is a relative path', function () {
+        it('stores relative paths to resolved static files', function (done) {
           var compiler = webpack({
             context: __dirname,
             entry: './fixtures/index.js',
@@ -243,9 +243,9 @@ describe('StaticFilesWebpackPlugin', function() {
               publicPath: '/bundles'
             }
           })
-          compiler.run(function(err, stats) {
+          compiler.run(function (err, stats) {
             assert(!err)
-            fs.readFile(path.join(process.cwd(), 'static.json'), function(err, content) {
+            fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
               assert(!err)
               var staticFiles = JSON.parse(content.toString())
               var fileNames = Object.keys(staticFiles)
@@ -254,7 +254,7 @@ describe('StaticFilesWebpackPlugin', function() {
                 path.join('static', 'b.gif'),
                 path.join('static', 'c.gif')
               ])
-              fileNames.forEach(function(fileName) {
+              fileNames.forEach(function (fileName) {
                 assert(staticFiles[fileName].match(publicFilePathRegexp))
               })
               done()

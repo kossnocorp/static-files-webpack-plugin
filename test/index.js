@@ -25,6 +25,28 @@ describe('StaticFilesWebpackPlugin', function() {
     })
   })
 
+  it('does not fail when static loader is not used', function(done) {
+    var compiler = webpack({
+      context: __dirname,
+      entry: './fixtures/without_static.js',
+      plugins: [
+        new StaticFilesWebpackPlugin()
+      ],
+      output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: '/bundles'
+      }
+    })
+    compiler.run(function(err, stats) {
+      assert(!err)
+      fs.readFile(path.join(process.cwd(), 'static.json'), function(err, content) {
+        assert(!err)
+        done()
+      })
+    })
+  })
+
   it('stores paths to resolved static files', function(done) {
     var compiler = webpack({
       context: __dirname,

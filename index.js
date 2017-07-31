@@ -20,7 +20,7 @@ function StaticFilesWebpackPlugin (options) {
 
 StaticFilesWebpackPlugin.prototype.apply = function(compiler) {
   compiler.plugin('after-emit', function(compilation, callback) {
-    var map = compilation[staticMapKey]
+    var map = compilation[staticMapKey] || {}
     if (this.options.useRelativePaths) {
       var relativePathBase
       if (typeof this.options.useRelativePaths === 'string') {

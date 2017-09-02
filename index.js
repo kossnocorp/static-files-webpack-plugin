@@ -18,8 +18,8 @@ function StaticFilesWebpackPlugin (options) {
   }
 }
 
-StaticFilesWebpackPlugin.prototype.apply = function(compiler) {
-  compiler.plugin('after-emit', function(compilation, callback) {
+StaticFilesWebpackPlugin.prototype.apply = function (compiler) {
+  compiler.plugin('after-emit', function (compilation, callback) {
     var map = compilation[staticMapKey] || {}
     if (this.options.useRelativePaths) {
       var relativePathBase
@@ -32,19 +32,19 @@ StaticFilesWebpackPlugin.prototype.apply = function(compiler) {
         relativePathBase = process.cwd()
       }
 
-      map = Object.keys(map).reduce(function(mapAcc, filePath) {
+      map = Object.keys(map).reduce(function (mapAcc, filePath) {
         mapAcc[filePath.replace(relativePathBase + path.sep, '')] = map[filePath]
         return mapAcc
       }, {})
     }
 
     // Ensure that the keys in the map are sorted
-    map = Object.keys(map).sort().reduce(function(mapAcc, filePath) {
+    map = Object.keys(map).sort().reduce(function (mapAcc, filePath) {
       mapAcc[filePath] = map[filePath]
       return mapAcc
     }, {})
 
-    fs.writeFile(this.options.outputPath, JSON.stringify(map), function(err) {
+    fs.writeFile(this.options.outputPath, JSON.stringify(map), function (err) {
       if (err) throw err
       callback()
     })

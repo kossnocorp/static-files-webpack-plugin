@@ -7,8 +7,10 @@
     "node": ">= 0.12"
   },
   "scripts": {
-    "test": "env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test --watch",
-    "test-ci": "env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test"
+    "lint": "standard",
+    "lint-fix": "standard --fix",
+    "test": "npm run lint && env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test --watch",
+    "test-ci": "npm run lint && env NODE_ENV=test mocha --require ./test/power_assert_loader.js ./test"
   },
   "repository": {
     "type": "git",
@@ -28,8 +30,14 @@
     "file-loader": "^0.8.4",
     "mocha": "^2.3.3",
     "power-assert": "^1.1.0",
-    "static-file-loader": "^0.4.0",
     "rimraf": "^2.4.3",
+    "standard": "^10.0.2",
+    "static-file-loader": "^0.4.0",
     "webpack": "^1.12.2"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
   }
 }

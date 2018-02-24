@@ -74,16 +74,16 @@ webpack
 
 ## Options
 
-### `path`
+### `outputPath`
 
-Specifies an output path for the JSON file. By default `path` equals to
+Specifies an output path for the JSON file. By default `outputPath` equals to
 `path.join(process.cwd(), 'static.json')`.
 
 It could be an absolute path:
 
 ```js
 new StaticFilesWebpackPlugin({
-  path: path.join(distPath, 'static.json')
+  outputPath: path.join(distPath, 'static.json')
 })
 ```
 
@@ -91,7 +91,7 @@ new StaticFilesWebpackPlugin({
 
 ```js
 new StaticFilesWebpackPlugin({
-  path: 'static.json'
+  outputPath: 'static.json'
 })
 ```
 

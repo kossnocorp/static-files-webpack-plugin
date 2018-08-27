@@ -14,7 +14,8 @@ function StaticFilesWebpackPlugin (options) {
 
   this.options = {
     outputPath: outputPath,
-    useRelativePaths: options.useRelativePaths
+    useRelativePaths: options.useRelativePaths,
+    prefix: options.prefix
   }
 }
 
@@ -32,8 +33,9 @@ StaticFilesWebpackPlugin.prototype.apply = function (compiler) {
         relativePathBase = process.cwd()
       }
 
+      var prefix = this.options.prefix ? this.options.prefix + path.sep : ''
       map = Object.keys(map).reduce(function (mapAcc, filePath) {
-        mapAcc[filePath.replace(relativePathBase + path.sep, '')] = map[filePath]
+        mapAcc[filePath.replace(relativePathBase + path.sep, prefix)] = map[filePath]
         return mapAcc
       }, {})
     }

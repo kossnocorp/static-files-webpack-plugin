@@ -129,6 +129,24 @@ new StaticFilesWebpackPlugin({
 }
 ```
 
+### `prefix`
+
+Sometimes it's instrumental to be able to swap relative path base with an arbitrary prefix
+instead of just removing it.
+
+```js
+new StaticFilesWebpackPlugin({
+  useRelativePaths: 'ui/static',
+  prefix: 'other/folder'
+})
+```
+
+```json
+{
+  "other/folder/img/favicon.png": "/e09ef13032827f865ef8004c185277f7.png"
+}
+```
+
 ## License
 
 MIT

@@ -131,19 +131,38 @@ new StaticFilesWebpackPlugin({
 
 ### `prefix`
 
-Sometimes it's instrumental to be able to swap relative path base with an arbitrary prefix
-instead of just removing it.
+Use `prefix` for replacing the string part of the path that was passed to
+`useRelativePaths`.
 
 ```js
 new StaticFilesWebpackPlugin({
   useRelativePaths: 'ui/static',
-  prefix: 'other/folder'
+  prefix: 'vendor/ui'
 })
 ```
 
 ```json
 {
-  "other/folder/img/favicon.png": "/e09ef13032827f865ef8004c185277f7.png"
+  "vendor/ui/img/favicon.png": "/e09ef13032827f865ef8004c185277f7.png"
+}
+```
+
+### `replace`
+
+Use `replace` for rewriting the resulting relative paths. For example,
+when some static assets are symlinked from the different folder you might want to
+replace specific part of the path.
+
+```js
+new StaticFilesWebpackPlugin({
+  useRelativePaths: true,
+  replace: (processedPath) => { processedPath.replace('img', 'static/img') }
+})
+```
+
+```json
+{
+  "static/img/favicon.png": "/e09ef13032827f865ef8004c185277f7.png"
 }
 ```
 

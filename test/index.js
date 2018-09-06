@@ -263,41 +263,83 @@ describe('StaticFilesWebpackPlugin', function () {
         })
       })
     })
-  })
 
-  describe('prefix', function () {
-    context('when prefix is set and useRelativePaths is a string', function () {
-      it('replaces the relative path base with the prefix', function (done) {
-        var compiler = webpack({
-          context: __dirname,
-          entry: './fixtures/index.js',
-          plugins: [
-            new StaticFilesWebpackPlugin({
-              useRelativePaths: 'test/fixtures',
-              prefix: path.join('doot', 'noot')
-            })
-          ],
-          output: {
-            path: path.join(__dirname, 'dist'),
-            filename: 'bundle.js',
-            publicPath: '/bundles'
-          }
-        })
-        compiler.run(function (err, stats) {
-          assert(!err)
-          fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
+    describe('prefix', function () {
+      context('when useRelativePaths is truthy', function () {
+        it('replaces the relative path base with the prefix', function (done) {
+          var compiler = webpack({
+            context: __dirname,
+            entry: './fixtures/index.js',
+            plugins: [
+              new StaticFilesWebpackPlugin({
+                useRelativePaths: 'test/fixtures',
+                prefix: path.join('doot', 'noot')
+              })
+            ],
+            output: {
+              path: path.join(__dirname, 'dist'),
+              filename: 'bundle.js',
+              publicPath: '/bundles'
+            }
+          })
+          compiler.run(function (err, stats) {
             assert(!err)
-            var staticFiles = JSON.parse(content.toString())
-            var fileNames = Object.keys(staticFiles)
-            assert.deepEqual(fileNames.sort(), [
-              path.join('doot', 'noot', 'static', 'a.gif'),
-              path.join('doot', 'noot', 'static', 'b.gif'),
-              path.join('doot', 'noot', 'static', 'c.gif')
-            ])
-            fileNames.forEach(function (fileName) {
-              assert(staticFiles[fileName].match(publicFilePathRegexp))
+            fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
+              assert(!err)
+              var staticFiles = JSON.parse(content.toString())
+              var fileNames = Object.keys(staticFiles)
+              assert.deepEqual(fileNames.sort(), [
+                path.join('doot', 'noot', 'static', 'a.gif'),
+                path.join('doot', 'noot', 'static', 'b.gif'),
+                path.join('doot', 'noot', 'static', 'c.gif')
+              ])
+              fileNames.forEach(function (fileName) {
+                assert(staticFiles[fileName].match(publicFilePathRegexp))
+              })
+              done()
             })
-            done()
+          })
+        })
+      })
+    })
+
+    describe('replace', function () {
+      context('when useRelativePaths is truthy', function () {
+        it('runs replace function on the normalized relative paths', function (done) {
+          var compiler = webpack({
+            context: __dirname,
+            entry: './fixtures/index.js',
+            plugins: [
+              new StaticFilesWebpackPlugin({
+                useRelativePaths: true,
+                replace: function (processedPath) {
+                  return processedPath
+                    .replace(path.join('test', 'fixtures'), path.join('doot', 'noot'))
+                }
+              })
+            ],
+            output: {
+              path: path.join(__dirname, 'dist'),
+              filename: 'bundle.js',
+              publicPath: '/bundles'
+            }
+          })
+          compiler.run(function (err, stats) {
+            assert(!err)
+            fs.readFile(path.join(process.cwd(), 'static.json'), function (err, content) {
+              assert(!err)
+              var staticFiles = JSON.parse(content.toString())
+              var fileNames = Object.keys(staticFiles)
+              assert.deepEqual(fileNames.sort(), [
+                path.join('doot', 'noot', 'static', 'a.gif'),
+                path.join('doot', 'noot', 'static', 'b.gif'),
+                path.join('doot', 'noot', 'static', 'c.gif')
+              ])
+              fileNames.forEach(function (fileName) {
+                assert(staticFiles[fileName].match(publicFilePathRegexp))
+              })
+              done()
+            })
           })
         })
       })

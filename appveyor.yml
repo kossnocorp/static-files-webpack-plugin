@@ -1,5 +1,5 @@
 environment:
-  nodejs_version: "4.2.2"
+  nodejs_version: "6"
 
 install:
   # Get the latest stable version of Node.js or io.js

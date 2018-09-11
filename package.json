@@ -1,6 +1,6 @@
 {
   "name": "static-files-webpack-plugin",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "description": "webpack plugin that emits a JSON file with public paths",
   "main": "index.js",
   "engines": {

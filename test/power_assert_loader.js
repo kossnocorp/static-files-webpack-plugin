@@ -1,1 +1,1 @@
-require('espower-loader')({cwd: process.cwd(), pattern: 'test/**'})
+require('espower-loader')({ cwd: process.cwd(), pattern: 'test/**' })

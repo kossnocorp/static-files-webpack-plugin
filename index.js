@@ -20,41 +20,52 @@ function StaticFilesWebpackPlugin (options) {
   }
 }
 
-StaticFilesWebpackPlugin.prototype.apply = function (compiler) {
-  compiler.plugin('after-emit', function (compilation, callback) {
-    var map = compilation[staticMapKey] || {}
-    if (this.options.useRelativePaths) {
-      var relativePathBase
-      if (typeof this.options.useRelativePaths === 'string') {
-        relativePathBase = this.options.useRelativePaths
-        if (!path.isAbsolute(relativePathBase)) {
-          relativePathBase = path.join(process.cwd(), relativePathBase)
+StaticFilesWebpackPlugin.prototype = {
+  constructor: StaticFilesWebpackPlugin,
+
+  apply: function (compiler) {
+    var afterEmit = function (compilation, callback) {
+      var map = compilation[staticMapKey] || {}
+      if (this.options.useRelativePaths) {
+        var relativePathBase
+        if (typeof this.options.useRelativePaths === 'string') {
+          relativePathBase = this.options.useRelativePaths
+          if (!path.isAbsolute(relativePathBase)) {
+            relativePathBase = path.join(process.cwd(), relativePathBase)
+          }
+        } else {
+          relativePathBase = process.cwd()
         }
-      } else {
-        relativePathBase = process.cwd()
+
+        var replace = this.options.replace
+        var prefix = this.options.prefix ? this.options.prefix + path.sep : ''
+        map = Object.keys(map).reduce(function (mapAcc, filePath) {
+          var relativePath = filePath.replace(relativePathBase + path.sep, prefix)
+          relativePath = replace(relativePath)
+          mapAcc[relativePath] = map[filePath]
+          return mapAcc
+        }, {})
       }
 
-      var replace = this.options.replace
-      var prefix = this.options.prefix ? this.options.prefix + path.sep : ''
-      map = Object.keys(map).reduce(function (mapAcc, filePath) {
-        var relativePath = filePath.replace(relativePathBase + path.sep, prefix)
-        relativePath = replace(relativePath)
-        mapAcc[relativePath] = map[filePath]
+      // Ensure that the keys in the map are sorted
+      map = Object.keys(map).sort().reduce(function (mapAcc, filePath) {
+        mapAcc[filePath] = map[filePath]
         return mapAcc
       }, {})
+
+      fs.writeFile(this.options.outputPath, JSON.stringify(map), function (err) {
+        if (err) throw err
+        callback()
+      })
+    }.bind(this)
+
+    if (compiler.hooks) {
+      var plugin = { name: 'StaticFilesWebpackPlugin' }
+      compiler.hooks.afterEmit.tapAsync(plugin, afterEmit)
+    } else {
+      compiler.plugin('after-emit', afterEmit)
     }
-
-    // Ensure that the keys in the map are sorted
-    map = Object.keys(map).sort().reduce(function (mapAcc, filePath) {
-      mapAcc[filePath] = map[filePath]
-      return mapAcc
-    }, {})
-
-    fs.writeFile(this.options.outputPath, JSON.stringify(map), function (err) {
-      if (err) throw err
-      callback()
-    })
-  }.bind(this))
+  }
 }
 
 module.exports = StaticFilesWebpackPlugin

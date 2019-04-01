@@ -1,6 +1,6 @@
 {
   "name": "static-files-webpack-plugin",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "webpack plugin that emits a JSON file with public paths",
   "main": "index.js",
   "engines": {
@@ -27,13 +27,13 @@
   "homepage": "https://github.com/kossnocorp/static-files-webpack-plugin",
   "devDependencies": {
     "espower-loader": "^1.0.0",
-    "file-loader": "^0.8.4",
+    "file-loader": "^1.1.11",
     "mocha": "^5.2.0",
     "power-assert": "^1.1.0",
     "rimraf": "^2.4.3",
     "standard": "^12.0.1",
-    "static-file-loader": "^0.4.0",
-    "webpack": "^1.12.2"
+    "static-file-loader": "^0.6.0",
+    "webpack": "^4.5.0"
   },
   "standard": {
     "env": [

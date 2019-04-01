@@ -1,1 +1,1 @@
-require.context('!!static-file!./static', true, /.+/)
+require.context('!!static-file-loader!./static', true, /.+/)
